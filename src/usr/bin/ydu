@@ -1,0 +1,46 @@
+#! /usr/bin/env bash
+
+set -eu
+
+main() {
+	local cmd_dir cmds
+	cmd_dir=../lib/ydu/commands
+
+	usage() {
+		local cmds
+		cmds=`ls $cmd_dir`
+		echo "Usage: $0 [-x] <command> [<cmd args>]"
+		echo "-x  performs \`set -x\` before running <command>"
+		echo "Commands:"
+		for i in $cmds ; do
+			echo ${i%.sh}
+		done
+		exit 1
+	}
+
+	[[ $# -eq 0 ]] && usage
+
+	local x
+	x=0
+	while getopts x name
+	do
+		case $name in
+			x) x=1;;
+			?) usage
+		esac
+	done
+
+	shift $((OPTIND - 1))
+
+	[[ $x -eq 1 ]] && set -x
+
+	cmd=$cmd_dir/$1.sh
+	[[ ! -f $cmd ]] && usage
+
+	. $cmd
+
+	shift
+	main $@
+}
+
+main $@
