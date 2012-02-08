@@ -4,7 +4,7 @@ set -eu
 
 main() {
 	local cmd_dir cmds
-	cmd_dir=../lib/ydu/commands
+	cmd_dir=`dirname $0`/../lib/ydu/commands
 
 	usage() {
 		local cmds
