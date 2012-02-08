@@ -7,7 +7,7 @@ start_() {
 		-net nic,macaddr=${MAC},model=virtio \
 		-net tap,ifname=${TAP},script=no,downscript=no \
 		-m ${MEM} \
-		-vnc ${VNC} \
+		-vnc ${VNC}
 }
 
 main() {
