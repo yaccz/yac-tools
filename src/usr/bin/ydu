@@ -34,7 +34,15 @@ main() {
 
 	[[ $x -eq 1 ]] && set -x
 
-	cmd=$cmd_dir/$1.sh
+	cmd=$cmd_dir/$1
+
+	while [[ -d $cmd ]] ; do
+		shift
+		cmd="${cmd}/$1"
+	done
+
+	cmd="${cmd}.sh"
+
 	[[ ! -f $cmd ]] && usage
 
 	. $cmd
