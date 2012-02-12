@@ -7,15 +7,20 @@ main() {
 	source $HOME/.config/ydu/maildir/shownew.sh
 
 	msg="New mail :: "
-	for i in `ls $maildir`; do
+	list=`mktemp`
 
-		new=`ls $maildir/$i/new | wc -l`
+	ls $maildir > $list
+
+	while read i; do
+		new=`ls "$maildir/$i/new" | wc -l`
 		if [[ $new -eq 0 ]] ; then
 			continue
 		fi
 
 		msg="${msg}$i: $new  "
-	done
+	done < $list
+
+	rm $list
 
 	if [[ ${#msg} -eq 12 ]] ; then
 		return 0
