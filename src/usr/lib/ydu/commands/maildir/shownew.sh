@@ -26,5 +26,5 @@ main() {
 		return 0
 	fi
 
-	echo $msg | dzen2 -p 10 -ta l &
+	echo $msg | dzen2 -p ${NOTIFICATION_DURATION:-1} -ta l &
 }
