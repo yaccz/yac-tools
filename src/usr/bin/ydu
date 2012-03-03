@@ -41,14 +41,20 @@ main() {
 		cmd="${cmd}/$1"
 	done
 
-	cmd="${cmd}.sh"
-
-	[[ ! -f $cmd ]] && usage
-
-	. $cmd
-
+	local try_cmd
+	try_cmd="${cmd}.sh"
 	shift
-	main $@
+
+	if [[ -f $try_cmd ]] ; then
+		. $try_cmd
+
+		main $@
+		return
+	fi
+
+	try_cmd=${cmd}.py
+	[[ ! -f ${try_cmd} ]] && usage
+	python $try_cmd $@
 }
 
 main $@
