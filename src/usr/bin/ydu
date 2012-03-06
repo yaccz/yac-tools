@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! /bin/bash
 
 set -eu
 
@@ -18,7 +18,7 @@ main() {
 		exit 1
 	}
 
-	[[ $# -eq 0 ]] && usage
+	[ $# -eq 0 ] && usage
 
 	local x
 	x=0
@@ -32,11 +32,11 @@ main() {
 
 	shift $((OPTIND - 1))
 
-	[[ $x -eq 1 ]] && set -x
+	[ $x -eq 1 ] && set -x
 
 	cmd=$cmd_dir/$1
 
-	while [[ -d $cmd ]] ; do
+	while [ -d $cmd ] ; do
 		shift
 		cmd="${cmd}/$1"
 	done
@@ -45,7 +45,7 @@ main() {
 	try_cmd="${cmd}.sh"
 	shift
 
-	if [[ -f $try_cmd ]] ; then
+	if [ -f $try_cmd ] ; then
 		. $try_cmd
 
 		main $@
@@ -53,7 +53,7 @@ main() {
 	fi
 
 	try_cmd=${cmd}.py
-	[[ ! -f ${try_cmd} ]] && usage
+	[ ! -f ${try_cmd} ] && usage
 	python $try_cmd $@
 }
 
