@@ -39,4 +39,6 @@ main() {
 	conf_$1
 	step_rsync
 	step_install
+
+	echo "cfeinstall $1 done" | dzen2 -p 1 -ta c -y 300 -fg red &
 }
