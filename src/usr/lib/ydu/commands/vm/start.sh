@@ -2,8 +2,24 @@
 
 start_() {
 	echo "    vnc: ${VNC}"
+
+	if [[ ! "${USB_PASS:-}" == "" ]] ; then
+		# USB_PASS shall be "vendorid=X,productid=Y"
+		USBARG="-usb -device usb-host,${USB_PASS}"
+	else
+		USBARG=""
+	fi
+
+	if [[ ! "${BOOT:-}" == "" ]] ; then
+		BOOTARG="-boot ${BOOT}"
+	else
+		BOOTARG=""
+	fi
+
 	kvm \
 		-drive file=${HDA},if=virtio \
+		${USBARG} \
+		${BOOTARG} \
 		-net nic,macaddr=${MAC},model=virtio \
 		-net tap,ifname=${TAP},script=no,downscript=no \
 		-m ${MEM} \
