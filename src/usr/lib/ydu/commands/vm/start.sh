@@ -3,25 +3,29 @@
 start_() {
 	echo "    vnc: ${VNC}"
 
-	if [[ ! "${USB_PASS:-}" == "" ]] ; then
+	if [[ -n "${USB_PASS:-}"  ]] ; then
 		# USB_PASS shall be "vendorid=X,productid=Y"
 		USBARG="-usb -device usb-host,${USB_PASS}"
-	else
-		USBARG=""
 	fi
 
-	if [[ ! "${BOOT:-}" == "" ]] ; then
+	if [[ -n "${BOOT:-}" ]] ; then
 		BOOTARG="-boot ${BOOT}"
-	else
-		BOOTARG=""
+	fi
+
+	if [[ -n "${MAC:-}" && -n "${TAP:-}" ]] ; then
+		NETARG="-net nic,macaddr=${MAC},model=virtio"
+		NETARG="$NETARG -net tap,ifname=${TAP},script=no,downscript=no"
+	fi
+
+	if [[ -n "${HDA:-}" ]] ; then
+		HDAARG="-drive file=${HDA},if=virtio"
 	fi
 
 	kvm \
-		-drive file=${HDA},if=virtio \
-		${USBARG} \
-		${BOOTARG} \
-		-net nic,macaddr=${MAC},model=virtio \
-		-net tap,ifname=${TAP},script=no,downscript=no \
+		${HDAARG:-} \
+		${USBARG:-} \
+		${BOOTARG:-} \
+		${NETARG:-} \
 		-m ${MEM} \
 		-vnc ${VNC}
 }
