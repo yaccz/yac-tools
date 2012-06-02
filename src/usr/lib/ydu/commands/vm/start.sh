@@ -26,6 +26,7 @@ start_() {
 		${USBARG:-} \
 		${BOOTARG:-} \
 		${NETARG:-} \
+		${KVM_ADD_ARG:-} \
 		-m ${MEM} \
 		-vnc ${VNC}
 }
