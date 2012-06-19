@@ -1,5 +1,16 @@
 #! /bin/sh
 
+DATA_DIR=$HOME/.local/share/ydu/dlyoujizz
+
+_curl() {
+	EXTRA_ARGS=""
+	#EXTRA_ARGS="-v"
+	set -x
+	#curl $EXTRA_ARGS -c $DATA_DIR/cookie.jar $@
+	curl $EXTRA_ARGS $@
+	set +x
+}
+
 dl() {
 	name=`echo $1 | sed 's/.*\/\([a-zA-Z0-9-]*\)\.html/\1/'`.flv
 	if [ -f $name ] ; then
@@ -7,8 +18,9 @@ dl() {
 		return 1
 	fi
 
-	flv=`curl $1 | grep so.addVariable\(\"file | sed 's/.*"\(http:.*flv\)?.*/\1/'`
+	flv=`_curl $1 | grep so.addVariable\(\"file | sed 's/.*"\(http:.*flv.*\)").*/\1/'`
 
+	#_curl $flv -o $name
 	wget $flv -O $name
 }
 
