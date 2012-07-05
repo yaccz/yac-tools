@@ -1,5 +1,16 @@
 TOP:=$(dir $(lastword $(MAKEFILE_LIST)))
 
-install:
+libdir:=/usr/lib/ydu
+
+all:
+
+install: installdirs
 	cp -r $(TOP)/src/usr/bin/ydu $(DESTDIR)/usr/bin/
-	cp -r $(TOP)/src/usr/lib/ydu $(DESTDIR)/usr/lib/
+	cp -r $(TOP)/src/usr/lib/ydu/* $(DESTDIR)$(libdir)
+
+installdirs:
+	mkdir -p $(DESTDIR)$(libdir)
+
+uninstall:
+	rm $(DESTDIR)/usr/bin/ydu
+	rm $(DESTDIR)$(libdir) -r
