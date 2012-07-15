@@ -21,8 +21,13 @@ start_() {
 		HDAARG="-drive file=${HDA},if=virtio"
 	fi
 
+	if [[ -n "${DRIVE:-}" ]] ; then
+		DRIVEARG="-drive ${DRIVE}"
+	fi
+
 	kvm \
 		${HDAARG:-} \
+		${DRIVEARG:-} \
 		${USBARG:-} \
 		${BOOTARG:-} \
 		${NETARG:-} \
