@@ -25,7 +25,7 @@ start_() {
 		DRIVEARG="-drive ${DRIVE}"
 	fi
 
-	kvm \
+	qemu-kvm \
 		${HDAARG:-} \
 		${DRIVEARG:-} \
 		${USBARG:-} \
