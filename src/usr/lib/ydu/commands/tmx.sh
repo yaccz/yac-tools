@@ -3,6 +3,8 @@
 set -eu
 
 main() {
+	source ~/.config/ydu/tmx.sh
+	# this file defines the needed tmux_sess_<name> functions to setup the required tmux instances
 	local name
 	name=$1
 
@@ -13,20 +15,3 @@ main() {
 	fi
 }
 
-tmux_sess_0() {
-	name=0
-	tmux new-session -s $name 'unset TMUX; tmux' \; \
-		rename-window wl \; \
-		new-window -n media 'unset TMUX; tmux' \; \
-		new-window -n cheatsheets 'unset TMUX; cd data/yaccz/cheatsheets/src; tmux'
-}
-
-tmux_sess_srv-dev() {
-	name=srv-dev
-	tmux new-session -s $name
-}
-
-tmux_sess_srv-pro() {
-	name=srv-pro
-	tmux new-session -s $name
-}
