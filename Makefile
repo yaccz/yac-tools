@@ -7,6 +7,7 @@ all:
 install: installdirs
 	cp -r $(TOP)/src/usr/bin/ydu $(DESTDIR)/usr/bin/
 	cp -r $(TOP)/src/usr/lib/ydu/* $(DESTDIR)$(libdir)
+	chmod og+rx $(DESTDIR)$(libdir) -R
 
 installdirs:
 	mkdir -p $(DESTDIR)$(libdir)
