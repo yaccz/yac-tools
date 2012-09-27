@@ -2,6 +2,10 @@
 
 set -eu
 
+usage() {
+	echo "Copy originals to separate dir and create standard smaller pictures for public release"
+}
+
 assert_prerun() {
 	which convert >/dev/null || (echo "Missing ImageMagick" ; exit 1)
 }
