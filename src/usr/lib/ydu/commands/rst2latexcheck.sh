@@ -13,4 +13,5 @@ usage() {
 
 main() {
 	grep '{\\color{red}ERROR/3}' $1 && die || true
+	grep '{\\color{red}WARNING/2}' $1 && die || true
 }
