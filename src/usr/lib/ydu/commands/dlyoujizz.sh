@@ -18,7 +18,8 @@ dl() {
 		return 1
 	fi
 
-	flv=`_curl $1 | grep so.addVariable\(\"file | sed 's/.*"\(http:.*flv.*\)").*/\1/'`
+	url1=`_curl $1 | grep "<iframe src=" | grep videos/embed | sed 's#.*\(http:.*youjizz.com/videos/embed/[0-9]\+\).*#\1#' | sort -u`
+	flv=`_curl $url1 | grep so.addVariable\(\"file | sed 's/.*"\(http:.*flv.*\)").*/\1/'`
 
 	#_curl $flv -o $name
 	wget $flv -O $name
