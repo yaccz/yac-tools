@@ -1,9 +1,7 @@
 #! /bin/bash
 
-. $HOME/.local/share/ydu/months.sh
-
 usage() {
-	echo "$0 price_per_km cost_per_liter consumption_per_100"
+	echo "$0 price_per_km price_per_liter consumption_per_100"
 }
 
 main() {
