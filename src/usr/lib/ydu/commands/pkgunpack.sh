@@ -9,7 +9,7 @@ usage() {
 
 unpack() {
 	case $1 in
-		"*.deb") unpack_deb $1 ;;
+		*.deb) unpack_deb $1 ;;
 		*)
 			echo "i dont know $1"
 	esac
