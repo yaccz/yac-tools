@@ -25,6 +25,10 @@ start_() {
 		DRIVEARG="-drive ${DRIVE}"
 	fi
 
+	if [[ -n "${CPU:-}" ]] ; then
+		CPUARG="-cpu kvm64"
+	fi
+
 	qemu-kvm \
 		${HDAARG:-} \
 		${DRIVEARG:-} \
@@ -32,6 +36,7 @@ start_() {
 		${BOOTARG:-} \
 		${NETARG:-} \
 		${KVM_ADD_ARG:-} \
+		${CPUARG:-} \
 		-m ${MEM} \
 		-vnc ${VNC}
 }
