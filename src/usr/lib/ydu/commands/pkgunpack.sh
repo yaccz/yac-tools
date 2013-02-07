@@ -10,9 +10,22 @@ usage() {
 unpack() {
 	case $1 in
 		*.deb) unpack_deb $1 ;;
+		*.rpm) unpack_rpm $1 ;;
 		*)
 			echo "i dont know $1"
 	esac
+}
+
+unpack_rpm() {
+	local dir
+	dir=${1%.rpm}
+
+	mkdir $dir
+	cp $1 $dir
+	cd $dir
+	rpm2cpio $1 | cpio -idmv
+	# ^ this extracts just the CONTENTS.cpio from the rpm,
+	# not the accompanying INFO, HEADER, INSTALL, UPGRADE files
 }
 
 unpack_deb() {
