@@ -8,7 +8,7 @@ die() {
 }
 
 usage() {
-	echo "Usage: <radio_to_play>"
+	echo "Usage: $0 [-l] <radio_to_play>"
 }
 
 play() {
@@ -40,9 +40,21 @@ list() {
 main() {
 	source $HOME/.config/ydu/radio.sh
 
-	if [[ $1 == "ls" ]] ; then
-		list
-	else
-		play $@
+	while getopts lh name
+	do
+		case $name in
+			l) list; return 0;;
+			h) usage; return 0;;
+			?) usage; return 1;;
+		esac
+	done
+
+	shift $((OPTIND - 1))
+
+	if [ $# -lt 1 ]; then
+		usage
+		return 1
 	fi
+
+	play $@
 }
