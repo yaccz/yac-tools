@@ -21,9 +21,8 @@ unpack_rpm() {
 	dir=${1%.rpm}
 
 	mkdir $dir
-	cp $1 $dir
 	cd $dir
-	rpm2cpio $1 | cpio -idmv
+	rpm2cpio ../$1 | cpio -idmv
 	# ^ this extracts just the CONTENTS.cpio from the rpm,
 	# not the accompanying INFO, HEADER, INSTALL, UPGRADE files
 }
