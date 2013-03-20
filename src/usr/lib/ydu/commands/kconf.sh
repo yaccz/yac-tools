@@ -12,7 +12,7 @@ _enable() {
 
 main() {
 	if [ ! "$1" == "-e" ] ;then
-		echo "Only -e is supported atm" > &2
+		echo "Only -e is supported atm" >&2
 		exit 1
 	fi
 
@@ -23,7 +23,7 @@ main() {
 	shift
 
 	if [ ! -f $cfg ] ; then
-		echo $cfg "ENOTAFILE"
+		echo $cfg "ENOTAFILE" >&2
 		exit 2
 	fi
 
