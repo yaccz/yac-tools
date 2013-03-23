@@ -2,6 +2,9 @@
 
 set -eu
 
+usage() {
+	echo "$0 [-w <minutes>]"
+}
 
 main() {
 	wait_=0
