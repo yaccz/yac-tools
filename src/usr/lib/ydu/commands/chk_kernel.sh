@@ -13,6 +13,6 @@ main() {
 	shift
 
 	for i in ${OPTS[@]}; do
-		grep $i $CONFIG || echo "$i not found"
+		grep "$i[ |=]" $CONFIG || echo "$i not found"
 	done
 }
