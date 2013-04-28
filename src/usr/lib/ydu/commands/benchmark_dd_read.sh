@@ -3,17 +3,11 @@
 # {{{ User configurable settings
 REPETITIONS=${REPETITIONS:-5}
 # }}}
-
-for i in REPETITIONS; do
-	echo "$i=${!i}"
-done
-
 # {{{ Fixes settings
 
 # BS COUNT BS COUNT ...
 IF=/tmp/crap
 OF=/dev/null
-
 # }}}
 
 # .. Rest of the code
@@ -25,5 +19,11 @@ bench_one() {
 	done
 }
 
-dd if=/dev/zero of=$IF bs=2048 count=250000 # prep input file
-bench_one
+main() {
+	for i in REPETITIONS; do
+		echo "$i=${!i}"
+	done
+
+	dd if=/dev/zero of=$IF bs=2048 count=250000 # prep input file
+	bench_one
+}

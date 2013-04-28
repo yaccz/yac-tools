@@ -5,10 +5,6 @@ REPETITIONS=${REPETITIONS:-5}
 EXTRA_DD_ARGS=${EXTRA_DD_ARGS:-"conv=fdatasync oflag=dsync"}
 # }}}
 
-for i in REPETITIONS EXTRA_DD_ARGS; do
-	echo "$i=${!i}"
-done
-
 # {{{ Fixes settings
 
 # BS COUNT BS COUNT ...
@@ -48,7 +44,13 @@ bench() {
 	done
 }
 
-for i in ${_EXTRA_DD_ARGS[@]}; do
-	export _EXTRA_DD="$i"
-	bench $config
-done
+main() {
+	for i in REPETITIONS EXTRA_DD_ARGS; do
+		echo "$i=${!i}"
+	done
+
+	for i in ${_EXTRA_DD_ARGS[@]}; do
+		export _EXTRA_DD="$i"
+		bench $config
+	done
+}
