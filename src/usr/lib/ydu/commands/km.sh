@@ -71,11 +71,13 @@ cmd_toggle() {
 main() {
 	source $HOME/.config/ydu/km.sh
 
+	[ $# -eq 0 ] && { usage; exit 1; }
+
 	local cmd
 	case $1 in
 		t) cmd="toggle";;
 		s) cmd="set";;
-		?) usage
+		*) usage
 	esac
 
 	shift 1
