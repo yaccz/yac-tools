@@ -2,6 +2,8 @@
 
 set -eu
 
+VERSION="0.1.0"
+
 main() {
 	local cmd_dir cmds
 	cmd_dir=`dirname $0`/../lib/ydu/commands
@@ -20,6 +22,10 @@ main() {
 
 	[ $# -eq 0 ] && usage
 
+	version() {
+		echo $VERSION
+	}
+
 	local ylg
 	ylg=/usr/lib/ylg/ylg.sh
 
@@ -35,10 +41,11 @@ main() {
 
 	local x
 	x=0
-	while getopts x name
+	while getopts xV name
 	do
 		case $name in
 			x) x=1;;
+			V) version; exit 0;;
 			?) usage
 		esac
 	done
