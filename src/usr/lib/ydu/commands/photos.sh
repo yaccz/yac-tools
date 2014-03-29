@@ -10,21 +10,25 @@ assert_prerun() {
 	which convert >/dev/null || (echo "Missing ImageMagick" ; exit 1)
 }
 
+
+find_work_pics() {
+	find ./ -maxdepth 1 -type f -iname '*.jpg' $@
+}
+
 main() {
 	# argv = dirs
 	assert_prerun
 
-	local pwd_orig
+	local pwd_orig find_cmd
 	pwd_orig=`pwd`
+
 
 	for i in $@; do
 		cd $i
 		mkdir orig
-		mv *JPG orig
+		find_work_pics -exec mv {} orig/ \;
 		cp orig/* ./
-		for i in *JPG; do
-			convert -resize 25% $i $i;
-		done
+		find_work_pics -exec convert -resize 25% {} {} \;
 
 		cd $pwd_orig
 	done
