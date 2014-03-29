@@ -22,7 +22,7 @@ main() {
 		mkdir orig
 		mv *JPG orig
 		cp orig/* ./
-		for i in *JPG; do
+		for i in *JPG *jpg; do
 			convert -resize 25% $i $i;
 		done
 
