@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-set -eu
+set -u
 
 usage() {
 	echo "Copy originals to separate dir and create standard smaller pictures for public release"
@@ -19,17 +19,13 @@ main() {
 	# argv = dirs
 	assert_prerun
 
-	local pwd_orig find_cmd
-	pwd_orig=`pwd`
-
-
 	for i in $@; do
-		cd $i
-		mkdir orig
-		find_work_pics -exec mv {} orig/ \;
-		cp orig/* ./
-		find_work_pics -exec convert -resize 25% {} {} \;
+		pushd $i >/dev/null || return
+		mkdir orig || return
+		find_work_pics -exec mv {} orig/ \; || return
+		cp orig/* ./ || return
+		find_work_pics -exec convert -resize 25% {} {} \; || return
 
-		cd $pwd_orig
+		popd >/dev/null || return
 	done
 }
