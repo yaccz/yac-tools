@@ -21,6 +21,8 @@ executable      ypt
         , filepath
         , shelly
         , split
+        , system-filepath
+        , MissingH
     hs-source-dirs:
         ./src
     ghc-options:
