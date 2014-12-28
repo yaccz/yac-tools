@@ -1,0 +1,32 @@
+author:         Jan Matějka
+build-type:     Simple
+cabal-version:  >= 1.16
+copyright:      2014 Jan Matějka <yac@blesmrt.net>
+license:        BSD3
+maintainer:     <yac@blesmrt.net>
+name:           ypt
+synopsis:       Collection of small utility programs to make yac's life
+                easier.
+version:        0.1.0
+
+executable      ypt
+    main-is:
+        ypt.hs
+    build-depends:
+        base >=4.6 && <4.7
+        , unix
+        , formatting >= 6.0 && <7.0
+        , text >= 0.11 && <0.12
+        , directory
+        , filepath
+        , shelly
+        , split
+    hs-source-dirs:
+        ./src
+    ghc-options:
+        -Wall
+    ghc-prof-options:
+        -auto-all
+        -prof
+    default-language:
+        Haskell2010
