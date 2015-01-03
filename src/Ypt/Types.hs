@@ -23,7 +23,7 @@ class UserMessage a where
     errorMsg = error . showMsg
 
     warn :: a -> IO ()
-    warn x = hPutStr stderr $ showMsg x
+    warn x = hPutStrLn stderr $ showMsg x
 
 type CommandName = String
 type Args = [String]
@@ -45,7 +45,7 @@ instance UserMessage GenericMessage where
                x
 
     showMsgT (Exception x) =
-        format (shown % "\n") x
+        format (shown) x
 
     showMsgT (SkippingSymlink x) =
         format ("Skipping symlink: " % string) x
