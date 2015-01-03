@@ -39,6 +39,9 @@ getDirsR'' :: P.FilePath -> Either SomeException FileStatus -> IO [P.FilePath]
 getDirsR'' _ (Left ex) = allHandler ex
 getDirsR'' p (Right s)
     | isSymbolicLink s = do
+        -- FIXME: should not print a warning if the link does not point
+        -- to a directory (how about broken symlinks? Those maybe should
+        -- still be reported).
         warn $ SkippingSymlink p
         return []
     | isDirectory s = do
@@ -93,6 +96,9 @@ findGitDirs p = do
     rs <- mapM gGR gs
 
     mapM_ printRemote $ zip gs rs
+    -- FIXME: the remotes should be printed immediately as found. Just
+    -- like errors now are. Not collected until search finishes and then
+    -- printed.
   where
     gGR p2 = catch (getGitRemotes p2) fh
     -- FIXME: this currently results into Shelly traceback and the git

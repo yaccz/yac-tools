@@ -24,6 +24,7 @@ class UserMessage a where
 
     warn :: a -> IO ()
     warn x = hPutStrLn stderr $ showMsg x
+    -- FIXME: should be warnMsg for consistency
 
 type CommandName = String
 type Args = [String]
