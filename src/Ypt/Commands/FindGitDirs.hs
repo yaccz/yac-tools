@@ -5,6 +5,7 @@ module Ypt.Commands.FindGitDirs
     ( main
     -- for hspec:
     , in'
+    , isGit
     )
 where
 
@@ -17,11 +18,10 @@ import Shelly
 import Data.List.Split
 import Data.List.Utils
 import qualified Data.Text as T
-import Control.Exception (catch, SomeException, toException)
+import Control.Exception
 import Ypt.Types
 import qualified System.FilePath.Posix as FPP
-import GHC.IO.Exception
-import Control.Exception (throwIO)
+import System.Posix.Files
 
 main :: [String] -> IO ()
 main []     = getCurrentDirectory >>= findGitDirs . fromText . T.pack
@@ -32,18 +32,24 @@ isGit :: FilePath -> Bool
 isGit p = (filename p) == (fromText $ T.pack ".git")
 
 getDirsR' :: P.FilePath -> IO [P.FilePath]
-getDirsR' p = do
-    xs <- catch (catch (getDirectoryContents p) iOErrHandler) allHandler
-    let xs' = [FPP.combine p x | x <- xs, not (in' x [".", ".."]) ]
-    children <- mapM getDirsR' xs'
-    return $ xs' ++ P.concat children
-  where
-    allHandler :: SomeException -> IO [P.FilePath]
-    allHandler ex = warn (Exception (toException ex)) >> return []
+getDirsR' p = try (getSymbolicLinkStatus p)  >>= getDirsR'' p
 
-    iOErrHandler :: IOError -> IO [P.FilePath]
-    iOErrHandler (IOError { ioe_type = InappropriateType }) = return []
-    iOErrHandler ex = throwIO ex
+-- FIXME: Detect circles
+getDirsR'' :: P.FilePath -> Either SomeException FileStatus -> IO [P.FilePath]
+getDirsR'' _ (Left ex) = allHandler ex
+getDirsR'' p (Right s)
+    | isSymbolicLink s = do
+        warn $ SkippingSymlink p
+        return []
+    | isDirectory s = do
+        xs <- catch (getDirectoryContents p) allHandler
+        let xs' = [FPP.combine p x | x <- xs, not (in' x [".", ".."]) ]
+        children <- mapM getDirsR' xs'
+        return $ xs' ++ P.concat children
+    | otherwise = return []
+
+allHandler :: SomeException -> IO [P.FilePath]
+allHandler ex = warn (Exception ex) >> return []
 
 getDirsR :: FilePath -> IO [FilePath]
 getDirsR p = do
@@ -84,9 +90,17 @@ getGitRemotes p = do
 findGitDirs :: FilePath -> IO ()
 findGitDirs p = do
     gs <- getGitDirs p
-    rs <- mapM getGitRemotes gs
+    rs <- mapM gGR gs
 
     mapM_ printRemote $ zip gs rs
+  where
+    gGR p2 = catch (getGitRemotes p2) fh
+    -- FIXME: this currently results into Shelly traceback and the git
+    -- filepath printed as usual but missing remotes if the git repo
+    -- can be read but not entered.
+
+    fh :: SomeException -> IO [GitRemote]
+    fh ex = warn (Exception ex) >> return []
 
 printRemote :: (FilePath, [GitRemote]) -> IO ()
 printRemote (p, xs) = do

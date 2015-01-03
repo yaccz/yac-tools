@@ -15,9 +15,9 @@ import Control.Exception (SomeException)
 
 class UserMessage a where
     showMsg :: a -> String
+    showMsg = unpack . showMsgT
 
     showMsgT :: a -> Text
-    showMsg = unpack . showMsgT
 
     errorMsg :: a -> b
     errorMsg = error . showMsg
@@ -33,6 +33,7 @@ data GenericMessage
     | MissingCommand
     | TooManyArgs CommandName Args
     | Exception SomeException
+    | SkippingSymlink FilePath
 
 instance UserMessage GenericMessage where
     showMsgT (CmdNotFound x) =
@@ -45,6 +46,9 @@ instance UserMessage GenericMessage where
 
     showMsgT (Exception x) =
         format (shown % "\n") x
+
+    showMsgT (SkippingSymlink x) =
+        format ("Skipping symlink: " % string) x
 
 type GitRemoteV = [String]
 
