@@ -9,7 +9,7 @@ module Ypt.Types
 where
 
 import Formatting
-import Data.Text.Lazy (Text)
+import Data.Text.Lazy (Text, unpack)
 import System.IO
 import Control.Exception (SomeException)
 
@@ -17,7 +17,7 @@ class UserMessage a where
     showMsg :: a -> String
 
     showMsgT :: a -> Text
-    showMsg = show . showMsgT
+    showMsg = unpack . showMsgT
 
     errorMsg :: a -> b
     errorMsg = error . showMsg
