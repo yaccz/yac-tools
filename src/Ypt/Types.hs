@@ -4,11 +4,14 @@ module Ypt.Types
     , GitMessage (..)
     , GenericMessage (..)
     , errorMsg
+    , warn
     )
 where
 
 import Formatting
 import Data.Text.Lazy (Text)
+import System.IO
+import Control.Exception (SomeException)
 
 class UserMessage a where
     showMsg :: a -> String
@@ -19,6 +22,9 @@ class UserMessage a where
     errorMsg :: a -> b
     errorMsg = error . showMsg
 
+    warn :: a -> IO ()
+    warn x = hPutStr stderr $ showMsg x
+
 type CommandName = String
 type Args = [String]
 
@@ -26,6 +32,7 @@ data GenericMessage
     = CmdNotFound CommandName
     | MissingCommand
     | TooManyArgs CommandName Args
+    | Exception SomeException
 
 instance UserMessage GenericMessage where
     showMsgT (CmdNotFound x) =
@@ -36,8 +43,8 @@ instance UserMessage GenericMessage where
                xs
                x
 
-
-
+    showMsgT (Exception x) =
+        format (shown % "\n") x
 
 type GitRemoteV = [String]
 
