@@ -13,7 +13,7 @@ executable      ypt
     main-is:
         ypt.hs
     build-depends:
-        base >=4.6 && <4.7
+        base >=4.6 && <4.8
         , unix
         , formatting >= 6.0 && <7.0
         , text >= 0.11 && <0.12
@@ -35,7 +35,7 @@ executable      ypt
 
 test-suite unit
     build-depends:
-        base >=4.6 && <4.7
+        base >=4.6 && <4.8
         , unix
         , formatting >= 6.0 && <7.0
         , text >= 0.11 && <0.12
