@@ -35,6 +35,7 @@ data GenericMessage
     | TooManyArgs CommandName Args
     | Exception SomeException
     | SkippingSymlink FilePath
+    | InvalidCommand CommandName Args
 
 instance UserMessage GenericMessage where
     showMsgT (CmdNotFound x) =
@@ -50,6 +51,9 @@ instance UserMessage GenericMessage where
 
     showMsgT (SkippingSymlink x) =
         format ("Skipping symlink: " % string) x
+
+    showMsgT (InvalidCommand c args) =
+        format ("Invalid comand: " % string % "args: " % shown) c args
 
 type GitRemoteV = [String]
 
