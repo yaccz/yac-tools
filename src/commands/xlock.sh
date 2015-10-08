@@ -18,6 +18,6 @@ main() {
 	fi
 
 	xscreensaver -no-capture-stderr -verbose -log $HOME/.local/xscreensaver.log &
-	ydu xlock
+	yt xlock
 }
 

@@ -42,7 +42,7 @@ start_() {
 }
 
 main() {
-	source ~/.config/ydu/vm/start.sh
+	source ~/.config/yt/vm/start.sh
 
 	echo "starting VPS $1"
 	def_$1

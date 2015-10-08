@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 main() {
-	source ~/.config/ydu/vm.sh
+	source ~/.config/yt/vm.sh
 
 	for i in $vms; do
 		echo $i

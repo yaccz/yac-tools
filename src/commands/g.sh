@@ -9,7 +9,7 @@ usage() {
 
 main() {
 	# manage git identities
-	source $HOME/.config/ydu/git.sh
+	source $HOME/.config/yt/git.sh
 
 	if [ $# -eq 0 ]; then
 		# just display current identity

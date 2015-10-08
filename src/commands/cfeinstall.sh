@@ -34,7 +34,7 @@ step_install() {
 }
 
 main() {
-	source $HOME/.config/ydu/cfeinstall.sh
+	source $HOME/.config/yt/cfeinstall.sh
 
 	conf_$1
 	step_rsync

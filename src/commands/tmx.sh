@@ -3,7 +3,7 @@
 set -eu
 
 main() {
-	source ~/.config/ydu/tmx.sh
+	source ~/.config/yt/tmx.sh
 	# this file defines the needed tmux_sess_<name> functions to setup the required tmux instances
 	local name
 	name=$1
