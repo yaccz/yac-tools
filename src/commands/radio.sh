@@ -38,7 +38,7 @@ list() {
 }
 
 main() {
-	source $HOME/.config/ydu/radio.sh
+	source $HOME/.config/yt/radio.sh
 
 	while getopts lh name
 	do

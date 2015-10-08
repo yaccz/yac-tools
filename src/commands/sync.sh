@@ -26,7 +26,7 @@ step_rsync() {
 }
 
 main() {
-	source $HOME/.config/ydu/sync.sh
+	source $HOME/.config/yt/sync.sh
 
 	conf_$1
 	step_rsync

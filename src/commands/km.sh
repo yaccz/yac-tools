@@ -20,7 +20,7 @@ set
 
 If <keymap_code> is not given, space separated list of available <keymap_code> will be printed.
 
-keymap_code are defined in XDG_CONFIG_HOME/ydu/km.sh
+keymap_code are defined in XDG_CONFIG_HOME/yt/km.sh
 
 toggle
 ======
@@ -69,7 +69,7 @@ cmd_toggle() {
 }
 
 main() {
-	source $HOME/.config/ydu/km.sh
+	source $HOME/.config/yt/km.sh
 
 	[ $# -eq 0 ] && { usage; exit 1; }
 

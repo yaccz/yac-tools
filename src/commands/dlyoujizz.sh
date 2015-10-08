@@ -1,6 +1,6 @@
 #! /bin/sh
 
-DATA_DIR=$HOME/.local/share/ydu/dlyoujizz
+DATA_DIR=$HOME/.local/share/yt/dlyoujizz
 
 _curl() {
 	EXTRA_ARGS=""

@@ -7,7 +7,7 @@ usage() {
 }
 
 main() {
-	. ~/.config/ydu/chk_kernel.sh
+	. ~/.config/yt/chk_kernel.sh
 
 	opts_$1
 	shift

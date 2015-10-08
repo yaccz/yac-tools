@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. $HOME/.local/share/ydu/months.sh
+. $HOME/.local/share/yt/months.sh
 
 usage() {
 	echo "display months cheatsheet with highlighted current month"

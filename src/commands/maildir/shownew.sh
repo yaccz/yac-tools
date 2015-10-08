@@ -4,7 +4,7 @@ set -eu
 
 
 main() {
-	source $HOME/.config/ydu/maildir/shownew.sh
+	source $HOME/.config/yt/maildir/shownew.sh
 
 	msg="New mail :: "
 	list=`mktemp`

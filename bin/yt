@@ -6,7 +6,7 @@ VERSION="0.1.2"
 
 main() {
 	local cmd_dir cmds
-	cmd_dir=`dirname $0`/../lib/ydu/commands
+	cmd_dir=`dirname $0`/../lib/yt/commands
 
 	usage() {
 		local cmds

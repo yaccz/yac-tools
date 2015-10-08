@@ -1,20 +1,21 @@
-TOP:=$(dir $(lastword $(MAKEFILE_LIST)))
+PREFIX ?=  /usr/local
+BINDIR ?=  $(PREFIX)/bin
+LIBDIR ?=  $(PREFIX)/lib
 
-libdir:=/usr/lib/ydu
-bindir:=/usr/bin
 
-all:
+INSTALL_DIR ?= install -m 755 -d
+INSTALL_BIN ?= install -m 755
 
-install: installdirs
-	cp -r $(TOP)/src/usr/bin/ydu $(DESTDIR)$(bindir)
-	cp -r $(TOP)/src/usr/lib/ydu/* $(DESTDIR)$(libdir)
-	chmod og+rx $(DESTDIR)$(libdir) -R
-	chmod og+rx $(DESTDIR)$(bindir)/ydu
+BUILD_DIR = build
 
-installdirs:
-	mkdir -p $(DESTDIR)$(libdir)
-	mkdir -p $(DESTDIR)$(bindir)
+NAME=yt
 
-uninstall:
-	rm $(DESTDIR)$(bindir)/ydu
-	rm $(DESTDIR)$(libdir) -r
+build:
+
+install:
+
+	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
+	$(INSTALL_BIN) ./bin/$(NAME) $(DESTDIR)$(BINDIR)/$(NAME)
+
+	$(INSTALL_DIR) $(DESTDIR)$(LIBDIR)/$(NAME)
+	cp -r ./src/commands $(DESTDIR)$(LIBDIR)/$(NAME)
