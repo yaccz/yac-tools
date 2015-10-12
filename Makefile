@@ -18,4 +18,5 @@ install:
 	$(INSTALL_BIN) ./bin/$(NAME) $(DESTDIR)$(BINDIR)/$(NAME)
 
 	$(INSTALL_DIR) $(DESTDIR)$(LIBDIR)/$(NAME)
+	$(INSTALL_DIR) $(DESTDIR)$(LIBDIR)/$(NAME)/commands
 	cp -r ./src/commands $(DESTDIR)$(LIBDIR)/$(NAME)
