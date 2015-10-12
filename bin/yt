@@ -62,9 +62,14 @@ main() {
 		ylg lg debug $cmd
 	done
 
+	shift
+	if [ -x $cmd ]; then
+		$cmd "$@"
+		return
+	fi
+
 	local try_cmd
 	try_cmd="${cmd}.sh"
-	shift
 
 	if [ -f $try_cmd ] ; then
 		. $try_cmd
