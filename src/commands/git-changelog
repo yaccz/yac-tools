@@ -1,0 +1,65 @@
+#! /usr/bin/zsh
+
+# Prints commmit body and hash for commits that are first-parents
+# (commit that is not part of a merge).
+# Usefull for generating changelogs when commits are merged with either
+# fast-forward for merges of size one commit and changelog-usefull
+# commit body. Or merged with --no-ff and the merge commit body
+# summarizes the whole merge changes in changelog-usefull way.
+
+# The exact output format can be specified with -v option.
+# Valid values:
+#  "2" - default. fmt ::= <commit-hash>, NL, <commit-body-in4>, NL
+#  "1" - format I needed for an older project.
+#       fmt ::= "- ", <commit-body-in2>, NL, <commit-hash>, NL
+#
+# commit-body-in4 = commit body, each line indented by 4 SP
+# commit-body-in2 = commit body, each line indented by 2 SP except for
+#                   the firts line
+
+function _git_log {
+  local fmt=$1
+  shift
+
+  git log \
+    --first-parent \
+    --pretty=${fmt} \
+    "$@"
+}
+
+function die_rc {
+  local msg="${1}"
+  local rc=${2}
+
+  printf "${msg}\n" >&2
+  exit ${rc}
+}
+
+function main {
+  local fmt="format:%H%n%B"
+  local awk_indent='{ if ($1 ~ /[0-9a-f]{32}/) print $1; else print "    "$0; }'
+
+  while getopts "v:" name; do
+    case $name in
+      v)
+        case $OPTARG in
+          1)
+            fmt="format:- %B%n%H%n"
+            awk_indent='{ if ($0 ~ /^- /) print $0; else print "  "$0; }'
+            ;;
+          2) # current defaults
+            ;;
+          *)
+            die_rc 'EINVAL -v\nValid: "1" | "2"\nDefault: 2' 22
+            ;;
+        esac
+        ;;
+    esac
+  done
+
+  shift $((OPTIND -1))
+
+  _git_log $fmt "$@" | awk ${awk_indent}
+}
+
+main "$@"
