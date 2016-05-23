@@ -10,13 +10,32 @@ BUILD_DIR = build
 
 NAME=yt
 
+COMM_DIR=$(DESTDIR)$(LIBDIR)/$(NAME)
+COMMS=$(subst ./src/,,$(shell find ./src/commands -type f))
+INSTALL_COMMS=$(addprefix $(DESTDIR)$(LIBDIR)/$(NAME)/,$(COMMS))
+
 build:
 
-install:
+install: $(INSTALL_COMMS) $(INSTALL_BIN_YT)
+
+$(DESTDIR)/$(BINDIR):
 
 	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
+
+$(INSTALL_BIN_YT): $(DESTDIR)$(BINDIR)
+
 	$(INSTALL_BIN) ./bin/$(NAME) $(DESTDIR)$(BINDIR)/$(NAME)
 
-	$(INSTALL_DIR) $(DESTDIR)$(LIBDIR)/$(NAME)
+
+$(INSTALL_COMMS): $(DESTDIR)$(LIBDIR)/$(NAME)
+	$(INSTALL_BIN) -D ./src/$(subst $(DESTDIR)$(LIBDIR)/$(NAME)/,,$@) $@
+
+
+$(DESTDIR)$(LIBDIR)/$(NAME):
+
 	$(INSTALL_DIR) $(DESTDIR)$(LIBDIR)/$(NAME)/commands
-	cp -r ./src/commands $(DESTDIR)$(LIBDIR)/$(NAME)
+
+uninstall:
+
+	$(RM) $(INSTALL_BIN_YT)
+	$(RM) -r $(COMM_DIR)
