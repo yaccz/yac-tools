@@ -13,6 +13,7 @@ NAME=yt
 COMM_DIR=$(DESTDIR)$(LIBDIR)/$(NAME)
 COMMS=$(subst ./src/,,$(shell find ./src/commands -type f))
 INSTALL_COMMS=$(addprefix $(DESTDIR)$(LIBDIR)/$(NAME)/,$(COMMS))
+INSTALL_BIN_YT=$(DESTDIR)$(BINDIR)/$(NAME)
 
 build:
 
