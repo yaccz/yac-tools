@@ -25,6 +25,8 @@ executable      ypt
         , MissingH
         , lens
         , network
+        , turtle
+        , Glob
     hs-source-dirs:
         ./src
     ghc-options:
