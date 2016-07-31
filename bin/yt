@@ -77,10 +77,6 @@ main() {
 		main $@
 		return
 	fi
-
-	try_cmd=${cmd}.py
-	[ ! -f ${try_cmd} ] && usage
-	python $try_cmd $@
 }
 
 main $@
