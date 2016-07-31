@@ -44,10 +44,7 @@ main() {
 	cmd=$cmd_dir/$1
 
 	shift
-	if [ -x $cmd ]; then
-		$cmd "$@"
-		return
-	fi
+	$cmd "$@"
 }
 
 main $@
