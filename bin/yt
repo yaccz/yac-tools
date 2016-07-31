@@ -43,11 +43,6 @@ main() {
 
 	cmd=$cmd_dir/$1
 
-	while [ -d $cmd ] ; do
-		shift
-		cmd="${cmd}/$1"
-	done
-
 	shift
 	if [ -x $cmd ]; then
 		$cmd "$@"
