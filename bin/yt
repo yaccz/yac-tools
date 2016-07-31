@@ -48,16 +48,6 @@ main() {
 		$cmd "$@"
 		return
 	fi
-
-	local try_cmd
-	try_cmd="${cmd}.sh"
-
-	if [ -f $try_cmd ] ; then
-		. $try_cmd
-
-		main $@
-		return
-	fi
 }
 
 main $@
