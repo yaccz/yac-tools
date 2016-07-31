@@ -26,19 +26,6 @@ main() {
 		echo $VERSION
 	}
 
-	local ylg
-	ylg=/usr/lib/ylg/ylg.sh
-
-
-	if [ -f $ylg ] ; then
-		. $ylg
-		ylg setLevel warn
-	else
-		ylg() {
-			echo "" > /dev/null 2>&1
-		}
-	fi
-
 	local x
 	x=0
 	while getopts xV name
@@ -59,7 +46,6 @@ main() {
 	while [ -d $cmd ] ; do
 		shift
 		cmd="${cmd}/$1"
-		ylg lg debug $cmd
 	done
 
 	shift
