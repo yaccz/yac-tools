@@ -14,28 +14,27 @@ _init_cmd_dir() {
     test -d ${CMD_DIR}
 }
 
+usage() {
+    local cmds
+    cmds=`ls $CMD_DIR`
+    echo "Usage: $0 [-x] <command> [<cmd args>]"
+    echo "-x  performs \`set -x\` before running <command>"
+    echo "Commands:"
+    for i in $cmds ; do
+        echo ${i%.sh}
+    done
+    exit 1
+}
+
+version() {
+    echo $VERSION
+}
 
 main() {
 	_init_cmd_dir
 	local cmds
 
-	usage() {
-		local cmds
-		cmds=`ls $CMD_DIR`
-		echo "Usage: $0 [-x] <command> [<cmd args>]"
-		echo "-x  performs \`set -x\` before running <command>"
-		echo "Commands:"
-		for i in $cmds ; do
-			echo ${i%.sh}
-		done
-		exit 1
-	}
-
 	[ $# -eq 0 ] && usage
-
-	version() {
-		echo $VERSION
-	}
 
 	local x
 	x=0
