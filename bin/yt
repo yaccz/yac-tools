@@ -4,13 +4,24 @@ set -eu
 
 VERSION="0.1.2"
 
+CMD_DIR=
+
+_init_cmd_dir() {
+    CMD_DIR=`dirname $0`/../lib/yt/commands
+    test -d ${CMD_DIR} && return
+
+    CMD_DIR=`dirname $0`/../src/commands
+    test -d ${CMD_DIR}
+}
+
+
 main() {
-	local cmd_dir cmds
-	cmd_dir=`dirname $0`/../lib/yt/commands
+	_init_cmd_dir
+	local cmds
 
 	usage() {
 		local cmds
-		cmds=`ls $cmd_dir`
+		cmds=`ls $CMD_DIR`
 		echo "Usage: $0 [-x] <command> [<cmd args>]"
 		echo "-x  performs \`set -x\` before running <command>"
 		echo "Commands:"
@@ -41,7 +52,7 @@ main() {
 
 	[ $x -eq 1 ] && set -x
 
-	cmd=$cmd_dir/$1
+	cmd=$CMD_DIR/$1
 
 	shift
 	$cmd "$@"
