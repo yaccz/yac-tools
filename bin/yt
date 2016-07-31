@@ -32,12 +32,10 @@ version() {
 
 main() {
 	_init_cmd_dir
-	local cmds
 
 	[ $# -eq 0 ] && usage
 
-	local x
-	x=0
+	local x=0
 	while getopts xV name
 	do
 		case $name in
