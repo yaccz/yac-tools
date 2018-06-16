@@ -5,6 +5,8 @@ setopt no_unset
 setopt pipe_fail
 setopt warn_create_global
 
+autoload -U zargs
+
 function fatal {
   f-msg "$@"
   exit 1
