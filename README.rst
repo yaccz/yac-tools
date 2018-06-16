@@ -1,4 +1,1 @@
-yacs tools
-==========
-
-Collection of small utility programs.
+Documentation/man1/yt.rst
