@@ -21,6 +21,8 @@ COMMANDS
 
 * ``man 1 yt-offending``
 
+* ``man 1 yt-backlight``
+
 DESCRIPTION
 ===========
 
