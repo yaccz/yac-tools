@@ -23,6 +23,8 @@ COMMANDS
 
 * ``man 1 yt-backlight``
 
+* ``man 1 yt-certinfo``
+
 DESCRIPTION
 ===========
 
