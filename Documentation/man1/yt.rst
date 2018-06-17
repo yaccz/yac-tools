@@ -19,6 +19,8 @@ COMMANDS
 
 * ``man 1 yt-keymap``
 
+* ``man 1 yt-offending``
+
 DESCRIPTION
 ===========
 
