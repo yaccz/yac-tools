@@ -5,7 +5,7 @@ build_dir     = build
 dist_dir      = dist
 src_dir       = src
 
-PREFIX        = /usr/local
+PREFIX       ?= /usr/local
 
 sdist         = $(name).$(version)
 
