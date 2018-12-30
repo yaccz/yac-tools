@@ -21,6 +21,8 @@ b_man_dir     = $(build_dir)/man/man1
 install_bin   = install -m755
 install_data  = install -m644
 
+bash_comp_dir = $(DESTDIR)$(PREFIX)/share/bash-completion/completions
+zsh_comp_dir  = $(DESTDIR)$(PREFIX)/share/zsh/vendor-completions
 
 # common program specific definitions
 version   = 0.2.0
@@ -33,6 +35,7 @@ mans      = $(patsubst Documentation/man1/%.rst,%.1,$(wildcard Documentation/man
 dirs      =
 dirs     += $(b_bin_dir) $(i_bin_dir)
 dirs     += $(b_man_dir) $(i_man_dir)
+dirs     += $(bash_comp_dir) $(zsh_comp_dir)
 
 ## build dependencies
 b_deps    =
@@ -45,8 +48,11 @@ b_deps   += $(addprefix $(b_man_dir)/,$(mans))
 i_deps    =
 i_deps   += $(i_bin_dir)
 i_deps   += $(i_man_dir)
+i_deps   += $(bash_comp_dir) $(zsh_comp_dir)
 i_deps   += $(addprefix $(i_bin_dir)/,$(cmds))
 i_deps   += $(addprefix $(i_man_dir)/,$(mans))
+i_deps   += $(bash_comp_dir)/yt
+i_deps   += $(zsh_comp_dir)/_yt
 
 
 # build
@@ -87,6 +93,14 @@ $(i_man_dir)/%: $(b_man_dir)/%
 
 	$(install_data) $< $@
 
+# install completions
+$(bash_comp_dir)/yt: completion/yt.bash
+
+	$(install_data) $< $@
+
+$(zsh_comp_dir)/_yt: completion/yt.bash
+
+	$(install_data) $< $@
 
 # create directories
 $(dirs):
